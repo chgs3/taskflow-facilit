@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum TaskStatus {
+  A_FAZER
+  EM_PROGRESSO
+  ATRASADO
+  CONCLUIDO
+}
+
+model Task {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  status      TaskStatus @default(A_FAZER)
+  assignee    String?
+  createdAt   DateTime   @default(now())
+  dueDate     DateTime?
+  updatedAt   DateTime   @updatedAt
+
+  @@map("tasks")
+}
