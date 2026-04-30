@@ -89,7 +89,7 @@ export class TaskService {
     const task = await this.taskRepository.findById(id);
 
     if (!task) {
-      throw new AppError('Task not found.', 404);
+      throw new AppError('Tarefa não encontrada.', 404);
     }
 
     const updatedTask = await this.taskRepository.update(id, {
@@ -103,7 +103,7 @@ export class TaskService {
     const task = await this.taskRepository.findById(id);
 
     if (!task) {
-      throw new AppError('Task not found.', 404);
+      throw new AppError('Tarefa não encontrada.', 404);
     }
 
     await this.taskRepository.delete(id);
@@ -113,7 +113,7 @@ export class TaskService {
     const task = await this.taskRepository.findById(id);
 
     if (!task) {
-      throw new AppError('Task not found.', 404);
+      throw new AppError('Tarefa não encontrada.', 404);
     }
 
     return getComputedTaskStatus(task);

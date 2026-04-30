@@ -11,8 +11,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "dotenv -e .env.test -- vitest run",
+    "test:watch": "dotenv -e .env.test -- vitest",
     "lint:types": "tsc --noEmit"
   },
   "keywords": [
@@ -42,6 +42,7 @@
     "@types/supertest": "^6.0.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
+    "dotenv-cli": "^11.0.0",
     "prisma": "^6.0.0",
     "supertest": "^7.0.0",
     "tsup": "^8.3.5",

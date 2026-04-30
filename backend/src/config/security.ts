@@ -1,4 +1,5 @@
 import rateLimit from 'express-rate-limit';
+
 import { env } from './env';
 
 export const apiRateLimiter = rateLimit({
@@ -7,6 +8,6 @@ export const apiRateLimiter = rateLimit({
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: {
-    message: 'Too many requests. Please try again later.'
+    message: 'Muitas requisições realizadas. Tente novamente mais tarde.'
   }
 });

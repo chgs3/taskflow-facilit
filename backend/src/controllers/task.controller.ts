@@ -8,6 +8,10 @@ import {
   updateTaskStatusSchema
 } from '../schemas/task.schemas';
 
+type TaskParams = {
+  id: string;
+};
+
 export class TaskController {
   constructor(private readonly taskService = new TaskService()) {}
 
@@ -19,7 +23,7 @@ export class TaskController {
     return response.status(200).json(tasks);
   };
 
-  findById = async (request: Request, response: Response) => {
+  findById = async (request: Request<TaskParams>, response: Response) => {
     const { id } = request.params;
 
     const task = await this.taskService.findById(id);
@@ -35,7 +39,7 @@ export class TaskController {
     return response.status(201).json(task);
   };
 
-  update = async (request: Request, response: Response) => {
+  update = async (request: Request<TaskParams>, response: Response) => {
     const { id } = request.params;
     const body = updateTaskSchema.parse(request.body);
 
@@ -44,7 +48,7 @@ export class TaskController {
     return response.status(200).json(task);
   };
 
-  updateStatus = async (request: Request, response: Response) => {
+  updateStatus = async (request: Request<TaskParams>, response: Response) => {
     const { id } = request.params;
     const body = updateTaskStatusSchema.parse(request.body);
 
@@ -53,7 +57,7 @@ export class TaskController {
     return response.status(200).json(task);
   };
 
-  delete = async (request: Request, response: Response) => {
+  delete = async (request: Request<TaskParams>, response: Response) => {
     const { id } = request.params;
 
     await this.taskService.delete(id);
