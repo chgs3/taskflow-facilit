@@ -22,6 +22,24 @@ export const taskStatusOptions: Array<{
   }
 ];
 
+export const editableTaskStatusOptions: Array<{
+  value: Exclude<TaskStatus, 'ATRASADO'>;
+  label: string;
+}> = [
+  {
+    value: 'A_FAZER',
+    label: 'A Fazer'
+  },
+  {
+    value: 'EM_PROGRESSO',
+    label: 'Em Progresso'
+  },
+  {
+    value: 'CONCLUIDO',
+    label: 'Concluído'
+  }
+];
+
 export function getStatusClass(status: TaskStatus) {
   const classes: Record<TaskStatus, string> = {
     A_FAZER: 'status todo',

@@ -5,7 +5,7 @@ import {
   fromDateTimeLocalValue,
   toDateTimeLocalValue
 } from '../utils/date';
-import { taskStatusOptions } from '../utils/status';
+import { editableTaskStatusOptions } from '../utils/status';
 
 type TaskFormModalProps = {
   isOpen: boolean;
@@ -152,7 +152,7 @@ export function TaskFormModal({
                   updateField('status', event.target.value as TaskStatus)
                 }
               >
-                {taskStatusOptions.map(status => (
+                {editableTaskStatusOptions.map(status => (
                   <option key={status.value} value={status.value}>
                     {status.label}
                   </option>

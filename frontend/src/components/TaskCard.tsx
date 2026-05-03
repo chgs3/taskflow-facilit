@@ -1,6 +1,6 @@
 import type { Task, TaskStatus } from '../types/task';
 import { formatDate } from '../utils/date';
-import { getStatusClass, taskStatusOptions } from '../utils/status';
+import { editableTaskStatusOptions, getStatusClass } from '../utils/status';
 
 type TaskCardProps = {
   task: Task;
@@ -63,20 +63,29 @@ export function TaskCard({
       </div>
 
       <div className="status-update">
-        <label htmlFor={`status-${task.id}`}>Alterar status</label>
-        <select
-          id={`status-${task.id}`}
-          value={task.status}
-          onChange={event =>
-            onStatusChange(task, event.target.value as TaskStatus)
-          }
-        >
-          {taskStatusOptions.map(status => (
-            <option key={status.value} value={status.value}>
-              {status.label}
-            </option>
-          ))}
-        </select>
+        <div className="status-update-field">
+          <label htmlFor={`status-${task.id}`}>Alterar status</label>
+
+          <select
+            id={`status-${task.id}`}
+            value={task.status}
+            onChange={event =>
+              onStatusChange(task, event.target.value as TaskStatus)
+            }
+          >
+            {editableTaskStatusOptions.map(status => (
+              <option key={status.value} value={status.value}>
+                {status.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {task.computedStatus === 'ATRASADO' && task.status !== 'ATRASADO' && (
+          <small className="status-hint">
+            Esta tarefa está atrasada porque a data limite já passou.
+          </small>
+        )}
       </div>
     </article>
   );

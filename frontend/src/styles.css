@@ -344,9 +344,16 @@ textarea:focus {
 
 .status-update {
   display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.status-update-field {
+  display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 18px;
 }
 
 .status-update label {
@@ -355,6 +362,14 @@ textarea:focus {
 
 .status-update select {
   max-width: 220px;
+}
+
+.status-hint {
+  display: block;
+  color: #991b1b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .modal-backdrop {
@@ -458,7 +473,8 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .status-update {
+  .status-update-field {
+    width: 100%;
     align-items: flex-start;
     flex-direction: column;
   }
