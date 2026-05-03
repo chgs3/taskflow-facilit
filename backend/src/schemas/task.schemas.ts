@@ -3,6 +3,17 @@ import { z } from 'zod';
 
 const taskStatusSchema = z.nativeEnum(TaskStatus);
 
+const editableTaskStatusSchema = z.enum([
+  TaskStatus.A_FAZER,
+  TaskStatus.EM_PROGRESSO,
+  TaskStatus.CONCLUIDO
+], {
+  errorMap: () => ({
+    message:
+      'O status Atrasado é calculado automaticamente com base na data limite.'
+  })
+});
+
 const optionalDateSchema = z
   .string()
   .datetime({ message: 'A data limite deve ser uma data ISO válida.' })
@@ -32,7 +43,7 @@ export const createTaskSchema = z.object({
     .max(1000, 'A descrição deve ter no máximo 1000 caracteres.')
     .optional()
     .nullable(),
-  status: taskStatusSchema.default(TaskStatus.A_FAZER),
+  status: editableTaskStatusSchema.default(TaskStatus.A_FAZER),
   assignee: z
     .string()
     .trim()
@@ -55,7 +66,7 @@ export const updateTaskSchema = z.object({
     .max(1000, 'A descrição deve ter no máximo 1000 caracteres.')
     .optional()
     .nullable(),
-  status: taskStatusSchema.optional(),
+  status: editableTaskStatusSchema.optional(),
   assignee: z
     .string()
     .trim()
@@ -66,7 +77,7 @@ export const updateTaskSchema = z.object({
 });
 
 export const updateTaskStatusSchema = z.object({
-  status: taskStatusSchema
+  status: editableTaskStatusSchema
 });
 
 export type ListTasksQueryInput = z.infer<typeof listTasksQuerySchema>;

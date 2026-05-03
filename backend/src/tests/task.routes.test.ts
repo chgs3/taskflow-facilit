@@ -208,4 +208,42 @@ describe('Task routes', () => {
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Tarefa não encontrada.');
   });
+
+  it('não deve permitir criar tarefa manualmente com status ATRASADO', async () => {
+  const response = await request(app)
+    .post('/api/tasks')
+    .send({
+      title: 'Tarefa ainda não vencida',
+      status: 'ATRASADO',
+      dueDate: '2026-12-31T23:59:59.000Z'
+    });
+
+  expect(response.status).toBe(400);
+  expect(response.body.message).toBe('Erro de validação.');
+  expect(response.body.details.fieldErrors.status).toContain(
+    'O status Atrasado é calculado automaticamente com base na data limite.'
+  );
+});
+
+it('não deve permitir alterar manualmente o status para ATRASADO', async () => {
+  const createResponse = await request(app).post('/api/tasks').send({
+    title: 'Tarefa com prazo futuro',
+    status: 'A_FAZER',
+    dueDate: '2026-12-31T23:59:59.000Z'
+  });
+
+  const taskId = createResponse.body.id;
+
+  const response = await request(app)
+    .patch(`/api/tasks/${taskId}/status`)
+    .send({
+      status: 'ATRASADO'
+    });
+
+  expect(response.status).toBe(400);
+  expect(response.body.message).toBe('Erro de validação.');
+  expect(response.body.details.fieldErrors.status).toContain(
+    'O status Atrasado é calculado automaticamente com base na data limite.'
+  );
+});
 });
